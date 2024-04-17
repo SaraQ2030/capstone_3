@@ -1,5 +1,6 @@
 package com.example.testcapstone3.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
@@ -29,7 +31,11 @@ public class Casse {
     @Pattern(regexp = "^personal|labor|commercial|criminal$")
     private String typeOflawsuits;
     @AssertTrue
-    private boolean isAppeal;
+    private Boolean isAppeal;
+    //  @Column(columnDefinition = "datetime ")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    //@FutureOrPresent
+    private LocalDate startDate;
 
 //===============================================================
 
@@ -38,9 +44,19 @@ public class Casse {
     @PrimaryKeyJoinColumn// هذا تابع
     private Appeal appeal;//done
 
-    @OneToMany(mappedBy = "casse", cascade = CascadeType.ALL)
-    private Set<Evidence> evidenceList;
+
     @ManyToOne
     @JsonIgnore
     private User usser;
+
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "client_id",referencedColumnName = "id")
+    private Client clients;
+
+
+    public boolean getIsAppeal(){
+        return this.isAppeal;
+    }
 }

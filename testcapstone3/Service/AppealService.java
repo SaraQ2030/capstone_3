@@ -85,15 +85,11 @@ public class AppealService {
         User user=userRepository.findUserById(userId);//lawyer
         Appeal appeal = appealRepository.findAppealByCasseId(caseId);
         if (appeal != null && user!=null) {
-            if (appeal.getCasse().isAppeal()) {
-
+            if (appeal.getCasse().getIsAppeal()) {
                 Casse casse = appeal.getCasse();
-                
-                task.setStatus("closed");
-                taskRepository.save(task);//save update
-                casse.setAppealT(false);
+                casse.setIsAppeal(false);
                 caseRepository.save(casse);//save update
-                appeal.setCas(casse);
+                appeal.setCasse(casse);
                 appealRepository.save(appeal);//save update
             } else {
                 throw new APIException("Appeal is already closed");

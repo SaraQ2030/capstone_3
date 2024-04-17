@@ -36,9 +36,7 @@ public class Evidence {
     private Appeal appeal;
 
 
-    @ManyToOne
-    @JsonIgnore
-    private Casse casse;
+
 //====================================================
 
 }

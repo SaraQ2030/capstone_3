@@ -45,10 +45,15 @@ public class User {
     @Pattern(regexp = "^Lawyer|Admin$")
     @Column(columnDefinition = "varchar(7) not null check(role='Lawyer' or role='Admin')")
     private String role;
-//====================Relations====================================
+
+    @NotEmpty(message = "Lawyerlicense can't be empty!")
+    @Column(columnDefinition = "varchar(255) not null ")//"varchar(255) as image path
+    private String Lawyerlicense;
+
+    //====================Relations====================================
     //relation here is many users have many clients!(ManyToMany)
-//    @ManyToMany(mappedBy = "user")
-//    private Set<Client> client;
+    @ManyToMany(mappedBy = "users")
+    private Set<Client> client;
     //delete comment sign later!
 
     //also 1 user has many cases! (OneToMany)
@@ -64,8 +69,5 @@ public class User {
 
 }
 
-//also 1 user has many categories! (OneToMany)
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-//    private Set<CategoryCase> categories;
 //================================================================
 
