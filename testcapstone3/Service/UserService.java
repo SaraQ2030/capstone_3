@@ -48,6 +48,8 @@ public class UserService {
     }
 
 
+
+
     //method to get a lawyer by Specialty(retrive lawyers with thier specialty)!
 //    public List<User> getLawyersBySpecialty(String specialty) {
 //        return userRepository.findUsersByRoleAndSpecialty("Lawyer", specialty);
