@@ -108,5 +108,8 @@ private final ClientRepository clientRepository;
         return user.getTasks().size();
     }
 
+    //method that allow to client to rate the lawyer!
+    //method to get all cases with priority for the specific lawyer!
+
 
 }

@@ -17,6 +17,5 @@ public class AppealDTO {
     private String title;
     @NotEmpty(message = "description appeal can not be null")
     private String description;
-    private LocalDate startDate;
 
 }

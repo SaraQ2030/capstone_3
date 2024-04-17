@@ -6,6 +6,7 @@ import com.example.testcapstone3.Model.Appeal;
 import com.example.testcapstone3.Model.Casse;
 import com.example.testcapstone3.Model.Client;
 import com.example.testcapstone3.Model.User;
+import com.example.testcapstone3.Repoistory.AppealRepository;
 import com.example.testcapstone3.Repoistory.CasseRepository;
 import com.example.testcapstone3.Repoistory.ClientRepository;
 import com.example.testcapstone3.Repoistory.UserRepository;
@@ -26,6 +27,7 @@ public class CasseService {
     private final CasseRepository caseRepository;
     private final ClientRepository clientRepository;
     private final UserRepository userRepository;
+    private final AppealRepository appealRepository;
     @Autowired
     private final AppealService appealService;
     @Autowired
@@ -111,7 +113,7 @@ public class CasseService {
         Casse casse = caseRepository.findCasseById(appealDTO.getCase_Id());
         long totalDays = 0;
         if (casse != null) {
-            if (casse.getStatus().equalsIgnoreCase("Closed")) {
+            if (casse.getStatus().equalsIgnoreCase("closed")) {
                 if (casse.getAppeal() == null) {
                     //make sure case without appeal object
                     if (casse.getIsAppeal()) {//make sure case can be appeal
@@ -129,7 +131,8 @@ public class CasseService {
                                 appeal.setStartDate(LocalDate.now());
                                 appeal.setClosed(false);
                                 casse.setAppeal(appeal);
-                                appealService.addAppeal(appeal);
+                                appealRepository.save(appeal);
+                               // appealService.addAppeal(appeal);
                             } else {
                                 throw new IllegalStateException("Cannot appeal cases older than 15 days");
                             }
@@ -146,7 +149,8 @@ public class CasseService {
                             appeal.setClosed(false);
                             appealService.addAppeal(appeal);
                             casse.setAppeal(appeal);
-                            appealService.addAppeal(appeal);
+                            appealRepository.save(appeal);
+                            //appealService.addAppeal(appeal);
                             //  break;
                             // }
                         }else{

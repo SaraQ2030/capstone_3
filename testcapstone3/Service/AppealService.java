@@ -79,7 +79,7 @@ public class AppealService {
     }
 
     //--------------------------------------------------Extra 1-------------------
-    public void approve(Integer caseId, Integer userId) {
+    public void approve(Integer caseId, Integer userId,String result) {
         User user = userRepository.findUserById(userId);//lawyer
         Appeal appeal = appealRepository.findAppealByCasseId(caseId);
         Casse casse = caseRepository.findCasseById(caseId);
@@ -90,7 +90,7 @@ public class AppealService {
                     throw new APIException(" Only the lawyer of the case can approve Appeal case with ID." + caseId);
                 }
                 if (appeal.getCasse().getStatus().equalsIgnoreCase("taken"))
-                    appeal.setResult("Approved");
+                    appeal.setResult(result);
                 appealRepository.save(appeal);
                 closedAppeal(caseId, userId);
             } else {
@@ -109,13 +109,14 @@ public class AppealService {
         User user = userRepository.findUserById(userId);//lawyer
         Appeal appeal = appealRepository.findAppealByCasseId(caseId);
         if (appeal != null && user != null) {
-            if (appeal.getCasse().getAppeal() != null) {
+            if (!appeal.getCasse().getAppeal().getStatus().equalsIgnoreCase("closed")) {
                 Casse casse = appeal.getCasse();
                 casse.setIsAppeal(false);
                 caseRepository.save(casse);//save update
                 appeal.setCasse(casse);
                 //Approved|NOT_Approved
                 appeal.setClosed(true);
+                appeal.setStatus("closed");
                 appealRepository.save(appeal);//save update
             } else {
                 throw new APIException("Appeal is already closed");
