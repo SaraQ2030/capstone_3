@@ -58,9 +58,8 @@ public class User {
     //delete comment sign later!
 
     //also 1 user has many cases! (OneToMany)
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usser")
-//    private Set<Task> tasks;
-//    //check the case name !
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usser")
+    private Set<Task> tasks;
 
     @OneToMany(cascade = CascadeType.DETACH, mappedBy = "usser")
     private Set<Casse> casses;

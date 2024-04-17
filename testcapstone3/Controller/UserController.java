@@ -48,4 +48,35 @@ public class UserController {
     public ResponseEntity findCasseByUsserIdAndsAndStatus(@PathVariable Integer lawyerID,@PathVariable String status)
     {return ResponseEntity.status(200).body(userService.findCasseByUsserIdAndsAndStatus(lawyerID,status));
     }
+
+    @GetMapping("/get-lawyers-by-specialty/{specialty}")
+    public ResponseEntity getLawyersBySpecialty(@PathVariable String specialty){
+        logger.info("inside get lawyers by specialy");
+        return ResponseEntity.ok().body(userService.getLawyersBySpecialty(specialty));
+    }
+
+    @GetMapping("/get-assigned-case-by-lawyer-id/{lawyerId}")
+    public ResponseEntity getAssignedCasesByLawyerId(@PathVariable Integer lawyerId){
+        logger.info("inside get Assigned Cases By LawyerId");
+        return ResponseEntity.ok().body(userService.getAssignedCasesByLawyerId(lawyerId));
+    }
+
+    @GetMapping("get-top-10")
+    public ResponseEntity findTop10LawyersByExperience(){
+        logger.info("inside find top 10 lawyers");
+        return ResponseEntity.ok().body(userService.findTop10LawyersByExperience());
+    }
+
+    @GetMapping("/get-number-of-clients-for-lawyer/{userId}")
+    public ResponseEntity getNumberOfClientsForLawyer(@PathVariable Integer userId){
+        logger.info("inside get number of clients");
+        return ResponseEntity.ok().body(userService.getNumberOfClientsForLawyer(userId));
+    }
+
+    @GetMapping("/get-tasks-by-user/{userId}")
+    public ResponseEntity getTaskCountByUserId(@PathVariable Integer userId){
+        logger.info("inside get Task Count By UserId");
+        return ResponseEntity.ok().body(userService.getTaskCountByUserId(userId));
+    }
+
 }

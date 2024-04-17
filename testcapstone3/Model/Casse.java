@@ -34,7 +34,7 @@ public class Casse {
     @Column(columnDefinition = "boolean ")
    private Boolean isAppeal;
     // @Column(columnDefinition = "varchar(8) not null")
-    @Pattern(regexp = "^untaken|taken|closed|opened$")
+    @Pattern(regexp = "^untaken|taken|closed$")
     private String status;
    // @Column(columnDefinition = "varchar(8) not null")
     @Pattern(regexp = "^investigation|trial$")

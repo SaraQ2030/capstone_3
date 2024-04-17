@@ -37,6 +37,11 @@ public class Task {
     @Column(columnDefinition = "double not null")
     private Double cost;
 
+    @NotEmpty(message = "priority can't be empty!")
+    @Pattern(regexp = "^Low|Medium|High$")
+    @Column(columnDefinition = "varchar(8) not null check(priority='low' or priority='medium' or priority='high')")
+    private String priority;
+
 
 
     //====================Relations================================

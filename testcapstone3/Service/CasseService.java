@@ -28,6 +28,10 @@ public class CasseService {
     private final UserRepository userRepository;
     @Autowired
     private final AppealService appealService;
+    @Autowired
+    private final UserService userService;
+
+
 
     public List<Casse> getall() {
         if (caseRepository.findAll().isEmpty()) {
@@ -101,6 +105,7 @@ public class CasseService {
 
 
 
+
     //--------------------------------------------------Extra 1-------------------
     public void AppeaThecase(AppealDTO appealDTO) {
         Casse casse = caseRepository.findCasseById(appealDTO.getCase_Id());
@@ -123,7 +128,6 @@ public class CasseService {
                                 appeal.setEvidenceList(null);
                                 appeal.setStartDate(LocalDate.now());
                                 appeal.setClosed(false);
-                                appealService.addAppeal(appeal);
                                 casse.setAppeal(appeal);
                                 appealService.addAppeal(appeal);
                             } else {
@@ -181,22 +185,20 @@ public class CasseService {
             throw new APIException("Case not found");
         else if (user == null)
             throw new APIException("lawyer not found");
-        else if (casse.getUsser().getId() == userID)
-        {
-            if(!casse.getStatus().equalsIgnoreCase("Closed")) {
-            casse.setStatus("Closed");
-            casse.setResult(result);
-            caseRepository.save(casse);}
-            else{
-                throw  new APIException("case is already closed");
-        }
-
-        } else {
+        else if (casse.getUsser().getId()==userID) {
+            if (casse.getStatus().equalsIgnoreCase("taken")) {
+                    casse.setStatus("closed");
+                    casse.setResult(result);
+                    caseRepository.save(casse);
+                }
+            }
+        else {
             throw new APIException(" Only the lawyer of the case can close case with ID." + caseID);
+
+
         }
     }
-
-    //3
+    //3 Done
 public void startCase(Integer caseId,Integer lawyerId){
     Casse casse = caseRepository.findCasseById(caseId);
     User user = userRepository.findUserById(lawyerId);
@@ -223,6 +225,8 @@ public void startCase(Integer caseId,Integer lawyerId){
     }
 
     }
+
+    /////////////////////////   2
 public void acceptClientRequest(Integer caseId,Integer lawyerId){
 
     Casse casse = caseRepository.findCasseById(caseId);
@@ -234,13 +238,19 @@ public void acceptClientRequest(Integer caseId,Integer lawyerId){
     else if (casse.getUsser().getId()==lawyerId){
         casse.setStatus("taken");
         caseRepository.save(casse);
+        userService.assignClientToUser(casse.getClients().getId(),lawyerId);
+
     }else{
         throw new APIException(" This case didn't send to you");
 
     }
 }
 
-
+    //===========================================================================
+    public List<Casse> getCasesByTypeOfLawsuits(String typeOfLawsuits) {
+        return caseRepository.findCassesByTypeOflawsuits(typeOfLawsuits);
+    }
+    //===========================================================================
 }
 
 

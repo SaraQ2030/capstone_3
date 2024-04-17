@@ -24,10 +24,11 @@ public class TaskController {
         return ResponseEntity.ok().body(taskService.getAllTasks());
     }
 
-    @PostMapping("/add")
-    public ResponseEntity addTask(@RequestBody @Valid Task task){
+    //MissingPathVariableException << add this one to advise layer!
+    @PostMapping("/add/{lawyer_id}")
+    public ResponseEntity addTask(@PathVariable Integer lawyer_id, @RequestBody @Valid Task task){
         logger.info("inside add task!");
-        taskService.addTask(task);
+        taskService.addTask(lawyer_id,task);
         return ResponseEntity.ok().body(new APIResponse("task added successfully!"));
     }
 
@@ -44,4 +45,18 @@ public class TaskController {
         taskService.deleteTask(id);
         return ResponseEntity.ok().body(new APIResponse("task deleted successfully!"));
     }
+
+    @GetMapping("/get-tasks-by-status/{status}")
+    public ResponseEntity getTasksByStatus(@PathVariable String status){
+        logger.info("inside get tasks by status");
+        return ResponseEntity.ok().body(taskService.getTasksByStatus(status));
+    }
+
+    @GetMapping("/get-task-by-priority/{priority}")
+    public ResponseEntity getTasksByPriority(@PathVariable String priority){
+        logger.info("inside get tasks by priority");
+        return ResponseEntity.ok().body(taskService.getTasksByPriority(priority));
+    }
+
 }
+

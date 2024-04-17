@@ -56,8 +56,8 @@ public class CasseController {
     }
 //closeCase
 //Integer caseID, Integer userID, String result
-    @PutMapping("close-case/{caseID}/{userID}")
-    public ResponseEntity appealCase(@PathVariable Integer caseID ,@PathVariable Integer userID ,@RequestBody String result){
+    @PutMapping("close-case/{caseID}/{userID}/{result}")
+    public ResponseEntity closeCase(@PathVariable Integer caseID ,@PathVariable Integer userID ,@PathVariable String result){
         caseService.closeCase(caseID,userID,result);
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("case closed successfully with result : "+result));
     }
@@ -74,6 +74,14 @@ public class CasseController {
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("Lawyer accepted case successfully "));
     }
     //startCase
+
+
+
+    @GetMapping("/get-case-by-type-of-lawsuits/{typeOfLawsuits}")
+    public ResponseEntity getCasesByTypeOfLawsuits(@PathVariable String typeOfLawsuits){
+        logger.info("inside get Cases By TypeOfLawsuits");
+        return ResponseEntity.ok().body(caseService.getCasesByTypeOfLawsuits(typeOfLawsuits));
+    }
 
 }
 

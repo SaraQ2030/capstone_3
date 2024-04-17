@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -90,6 +91,13 @@ public class ControllerAdvise {
         String msg = e.getMessage();
         return ResponseEntity.status(400).body(new APIResponse(msg));
     }
+
+    @ExceptionHandler(value = MissingPathVariableException.class)
+    public ResponseEntity<APIResponse>
+    MissingPathVariableException(MissingPathVariableException e) {
+        String msg = e.getMessage();
+        return ResponseEntity.status(400).body(new APIResponse(msg));
+    }
 ////////////////////////////////ResourceHttpRequestHandler
 @ExceptionHandler(value = NoResourceFoundException.class)
 public ResponseEntity<APIResponse>
@@ -98,6 +106,7 @@ NoResourceFoundException(NoResourceFoundException e) {
     return ResponseEntity.status(400).body(new APIResponse(msg));
 }
 //
+
 
 
 }

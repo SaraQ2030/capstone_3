@@ -1,8 +1,11 @@
 package com.example.testcapstone3.Service;
 import com.example.testcapstone3.ApiResponse.APIException;
 import com.example.testcapstone3.Model.Casse;
+import com.example.testcapstone3.Model.Client;
+import com.example.testcapstone3.Model.Task;
 import com.example.testcapstone3.Model.User;
 import com.example.testcapstone3.Repoistory.CasseRepository;
+import com.example.testcapstone3.Repoistory.ClientRepository;
 import com.example.testcapstone3.Repoistory.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,8 @@ public class UserService {
 
     private final UserRepository userRepository;
       private final CasseRepository caseRepository;
+private final ClientRepository clientRepository;
+
 
     public List<User> getAllUsers(){
         return userRepository.findAll();
@@ -56,24 +61,52 @@ public class UserService {
         }
         return casses;
     }
+    public void assignClientToUser(Integer clientID,Integer lawyerID){
+        Client client=clientRepository.findClientById(clientID);
+        User user=userRepository.findUserById(lawyerID);
+        if (client==null|| user==null)throw new APIException ("can't assign ");
+        client.getUsers().add(user);
+        user.getClient().add(client);
+        clientRepository.save(client);
+        userRepository.save(user);
+    }
 
 
+    //method to get a lawyer by Specialty(get lawyers with their specialty)!
+    public List<User> getLawyersBySpecialty(String specialty) {
+        return userRepository.findUsersByRoleAndSpecialty("Lawyer", specialty);
+    }
 
-
-
-    //method to get a lawyer by Specialty(retrive lawyers with thier specialty)!
-//    public List<User> getLawyersBySpecialty(String specialty) {
-//        return userRepository.findUsersByRoleAndSpecialty("Lawyer", specialty);
-//    }
     //method to get assigned cases by lawyer id!
-//    public List<Case> getAssignedCasesByLawyerId(Integer lawyerId) {
-//        return caseRepository.findCasesByLawyerId(lawyerId);
-//    }
-    /*getTasksByUserAndStatus(Integer userId, String status)
-    Retrieve tasks of a specific status assigned to a user.
-     */
-//    public List<Task> getTasksByUserAndStatus(Integer userId, String status) {
-//        return taskRepository.findTasksByUserIdAndStatus(userId, status);
-//    }
+    public List<Casse> getAssignedCasesByLawyerId(Integer lawyerId) {
+        return caseRepository.findCassesByUsserId(lawyerId);
+    }
+
+
+    //method to get top 10 lawyers depand on their experience
+    public List<User> findTop10LawyersByExperience() {
+        return userRepository.findTop10LawyersByExperience("Lawyer");
+    }
+
+
+    // Method to get the number of clients for specific lawyer
+    public int getNumberOfClientsForLawyer(Integer lawyerId) {
+        User lawyer = userRepository.findUserById(lawyerId);
+        if (lawyer == null || !"Lawyer".equals(lawyer.getRole())) {
+            throw new APIException("Lawyer not found!");
+        }
+        return lawyer.getClient().size();
+    }
+
+
+    // Method to get all users with a specific number of tasks
+    public int getTaskCountByUserId(Integer userId) {
+        User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new APIException("User not found!");
+        }
+        return user.getTasks().size();
+    }
+
 
 }

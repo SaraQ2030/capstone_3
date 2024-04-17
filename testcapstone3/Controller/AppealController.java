@@ -48,5 +48,11 @@ public class AppealController {
         appealService.closedAppeal(caseId,userId);
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("Closed successfully"));
     }
+
+    @PutMapping("approve-appeal/{caseId}/{userId}")
+    public ResponseEntity approve(@PathVariable Integer caseId,@PathVariable Integer userId){
+        appealService.approve(caseId,userId);
+        return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("approved successfully"));
+    }
 }
 

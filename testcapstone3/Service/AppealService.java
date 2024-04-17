@@ -79,47 +79,56 @@ public class AppealService {
     }
 
     //--------------------------------------------------Extra 1-------------------
-    public void approve(Integer caseId,Integer userId ){
-        User user=userRepository.findUserById(userId);//lawyer
+    public void approve(Integer caseId, Integer userId) {
+        User user = userRepository.findUserById(userId);//lawyer
         Appeal appeal = appealRepository.findAppealByCasseId(caseId);
-        Casse casse=caseRepository.findCasseById(caseId);
-        if (appeal != null && user!=null) {
-            if(casse.getUsser().getId()==userId){
-                throw new APIException(" Only the lawyer of the case can approve Appeal case with ID." + caseId);
-            }
-                appeal.setResult("Approved");
-                appealRepository.save(appeal);
-            closedAppeal( caseId, userId);
+        Casse casse = caseRepository.findCasseById(caseId);
+        if (appeal != null) {
 
+            if (user != null) {
+                if (casse.getUsser().getId() == userId) {
+                    throw new APIException(" Only the lawyer of the case can approve Appeal case with ID." + caseId);
+                }
+                if (appeal.getCasse().getStatus().equalsIgnoreCase("taken"))
+                    appeal.setResult("Approved");
+                appealRepository.save(appeal);
+                closedAppeal(caseId, userId);
+            } else {
+                throw new APIException("lawyer not found");
+            }
+
+        } else {
+            throw new APIException("appeal not found");
         }
+
     }
 
-///=================================
-    public void closedAppeal(Integer caseId,Integer userId) {
+
+    ///=================================
+    public void closedAppeal(Integer caseId, Integer userId) {
         User user = userRepository.findUserById(userId);//lawyer
         Appeal appeal = appealRepository.findAppealByCasseId(caseId);
         if (appeal != null && user != null) {
-            if (appeal.getCasse().getAppeal()!=null) {
+            if (appeal.getCasse().getAppeal() != null) {
                 Casse casse = appeal.getCasse();
                 casse.setIsAppeal(false);
                 caseRepository.save(casse);//save update
                 appeal.setCasse(casse);
                 //Approved|NOT_Approved
-                    appeal.setClosed(true);
-                    appealRepository.save(appeal);//save update
-                } else {
-                    throw new APIException("Appeal is already closed");
-                }
+                appeal.setClosed(true);
+                appealRepository.save(appeal);//save update
             } else {
-                throw new APIException("Not Found Appeal with ID " + caseId);
+                throw new APIException("Appeal is already closed");
             }
+        } else {
+            throw new APIException("Not Found Appeal with ID " + caseId);
         }
-
     }
+}
 
 
 
-    //|| user==null){
+//|| user==null){
 
 
 
