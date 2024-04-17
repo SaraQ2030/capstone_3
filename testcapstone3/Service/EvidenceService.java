@@ -1,6 +1,8 @@
 package com.example.testcapstone3.Service;
 import com.example.testcapstone3.ApiResponse.APIException;
 import com.example.testcapstone3.Model.Appeal;
+import com.example.testcapstone3.Model.Casse;
+import com.example.testcapstone3.Model.Client;
 import com.example.testcapstone3.Model.Evidence;
 import com.example.testcapstone3.Repoistory.AppealRepository;
 import com.example.testcapstone3.Repoistory.CasseRepository;
@@ -27,11 +29,12 @@ public class EvidenceService {
     }
 
 
-    public void add(Evidence evidence){
-       Appeal appeal=appealRepository.findAppealByCasseId(evidence.getAppeal().getCasse().getId());
+    public void add(Integer appealID, Evidence evidence){
+       Appeal appeal=appealRepository.findAppealByCasseId(appealID);
        evidence.setSubmissionDate(LocalDate.now());
-       if (appeal==null)throw new APIException("Fail addition because Not found appeal");
+       if (appeal==null){throw new APIException(" Not found appeal");}
        evidenceRepository.save(evidence);
+        assignEvidenceToAppeal(evidence.getId(),appealID);
     }
 
     public void update(Evidence evidence,Integer id){
@@ -59,5 +62,18 @@ public class EvidenceService {
             throw new APIException("Not found Evidence with ID"+id);
         }
     }
+
+    public void assignEvidenceToAppeal(Integer eviID, Integer appealId) {
+        Appeal appeal = appealRepository.findAppealByCasseId(appealId);
+        Evidence evidence = evidenceRepository.findEvidenceById(eviID);
+
+        if (appeal == null || evidence == null)
+            throw new APIException("Cannot evidence client to appeal");
+
+        evidence.setAppeal(appeal);
+        evidenceRepository.save(evidence);
+    }
+
+
     }
 

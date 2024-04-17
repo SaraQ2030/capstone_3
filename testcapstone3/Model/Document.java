@@ -29,7 +29,7 @@ public class Document {
 
 
     @OneToOne
-    @MapsId
-    @JsonIgnore
+    @MapsId//only oneToOne relation its =    @PrimaryKeyJoinColumn
+    @JsonIgnore // infinite loop so when get case ignore case
     private Casse casse;
 }

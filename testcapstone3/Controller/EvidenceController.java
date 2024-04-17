@@ -23,11 +23,11 @@ public class EvidenceController {
         logger.info("inside get-all");
         return ResponseEntity.status(HttpStatus.OK).body(evidenceService.getAll());
     }
-    @PostMapping("/add")
-    public ResponseEntity add(@RequestBody @Valid Evidence evidence){
+    @PostMapping("/add/{appealId}")
+    public ResponseEntity add(@PathVariable Integer appealID, @RequestBody @Valid Evidence evidence){
         logger.info("inside add");
 
-        evidenceService.add(evidence);
+        evidenceService.add(appealID,evidence);
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("evidence case is added successfully"));
     }
     @PutMapping("/update/{id}")

@@ -26,11 +26,11 @@ public class CasseController {
         logger.info("inside get-all");
         return ResponseEntity.status(HttpStatus.OK).body(caseService.getall());
     }
-    @PostMapping("/add")
-    public ResponseEntity add(@RequestBody @Valid Casse casse){
+    @PostMapping("/add/{clientID}")
+    public ResponseEntity add(@PathVariable Integer clientID,@RequestBody @Valid Casse casse){
         logger.info("inside add");
 
-        caseService.add(casse);
+        caseService.add(clientID,casse);
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("Case is added successfully"));
     }
     @PutMapping("/update/{id}")
@@ -54,7 +54,26 @@ public class CasseController {
         caseService.AppeaThecase(appealDTO);
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("Appeal added successfully"));
     }
+//closeCase
+//Integer caseID, Integer userID, String result
+    @PutMapping("close-case/{caseID}/{userID}")
+    public ResponseEntity appealCase(@PathVariable Integer caseID ,@PathVariable Integer userID ,@RequestBody String result){
+        caseService.closeCase(caseID,userID,result);
+        return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("case closed successfully with result : "+result));
+    }
+    @PutMapping("start-case/{caseID}/{userID}")
+    public ResponseEntity startCase(@PathVariable Integer caseID ,@PathVariable Integer userID ){
+        caseService.startCase(caseID,userID);
+        return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("case start successfully with status investigation"));
+    }
 
+    //public void acceptClientRequest(Integer caseId,Integer lawyerId){
+    @PutMapping("accept-case/{caseID}/{userID}")
+    public ResponseEntity acceptClientRequest(@PathVariable Integer caseID ,@PathVariable Integer userID ){
+        caseService.acceptClientRequest(caseID,userID);
+        return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("Lawyer accepted case successfully "));
+    }
+    //startCase
 
 }
 

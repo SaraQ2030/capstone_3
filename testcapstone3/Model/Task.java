@@ -27,23 +27,16 @@ public class Task {
     @NotEmpty(message = "task description can't be empty!")
     @Column(columnDefinition = "varchar(255) not null")
     private String description;
-
     private LocalDate start_at;
-
     @NotEmpty(message = "task status can't be empty!")
     @Column(columnDefinition = "varchar(15) not null check(status='intake' or status='investigation' or status='trial')")
     @Pattern(regexp = "^intake|investigation|trial$")
     private String status;
 
-    @NotNull(message = "lawyer id can't be null!")
-    @Column(columnDefinition = "int not null")
-    private Integer lawyer_id;
-
     @NotNull(message = "task cost can't be null!")
     @Column(columnDefinition = "double not null")
     private Double cost;
 
-    private LocalDate endDate;
 
 
     //====================Relations================================
@@ -52,6 +45,12 @@ public class Task {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @JsonIgnore
     private User usser;
+
+
+//    @ManyToOne
+//    @JsonIgnore
+//    @JoinColumn(name = "task_id",referencedColumnName = "id")
+//    private Casse casses;
 //==============================================================
 
 }

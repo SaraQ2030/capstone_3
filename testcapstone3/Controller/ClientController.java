@@ -46,4 +46,11 @@ public class ClientController {
         return ResponseEntity.status(200).body(new APIResponse("Client deleted"));
     }
 
+    //public void sendRequestToLawyer(Integer caseID,Integer clientID,Integer lawyerID){
+@PutMapping("send-request-lawyer/{caseID}/{clientID}/{lawyerID}")
+    public ResponseEntity sendRequestToLawyer(@PathVariable Integer caseID,@PathVariable Integer clientID,@PathVariable Integer lawyerID){
+        clientService.sendRequestToLawyer(caseID,clientID,lawyerID);
+        return ResponseEntity.status(200).body(new APIResponse("Send Request Successfully"));
+
+}
 }

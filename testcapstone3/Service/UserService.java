@@ -1,7 +1,8 @@
 package com.example.testcapstone3.Service;
 import com.example.testcapstone3.ApiResponse.APIException;
+import com.example.testcapstone3.Model.Casse;
 import com.example.testcapstone3.Model.User;
-import com.example.testcapstone3.Repoistory.TaskRepository;
+import com.example.testcapstone3.Repoistory.CasseRepository;
 import com.example.testcapstone3.Repoistory.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    //    private final CaseRepository caseRepository;
-    private final TaskRepository taskRepository;
+      private final CasseRepository caseRepository;
 
     public List<User> getAllUsers(){
         return userRepository.findAll();
@@ -31,7 +31,7 @@ public class UserService {
         }
         u.setEmail(user.getEmail());
         u.setName(user.getName());
-        u.setTasks(user.getTasks());
+       // u.setTasks(user.getTasks());
         u.setYearsOfExperience(user.getYearsOfExperience());
         u.setSpecialty(user.getSpecialty());
         u.setRole(user.getRole());
@@ -46,6 +46,17 @@ public class UserService {
         }
         userRepository.delete(user);
     }
+//==============================
+
+    public List<Casse> findCasseByUsserIdAndsAndStatus(Integer lawerID,String status){
+        User user=userRepository.findUserById(lawerID);
+        if (user==null){throw new APIException("Lawyer Not Found");}
+        List<Casse> casses=caseRepository.findCasseByUsserIdAndsAndStatus(lawerID,status);
+        if (casses.isEmpty()){throw new APIException("Empty List ");
+        }
+        return casses;
+    }
+
 
 
 

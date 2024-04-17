@@ -28,7 +28,7 @@ import java.util.Set;
         private Integer age;
         @NotEmpty(message = "the phone number cannot be empty")
         @Column(columnDefinition = "varchar(15) not null unique")
-        @Pattern(regexp = "^05\\d{8}$"  , message = "Number should start with 05xxxxxxxx and contain 10 numbers")
+       // @Pattern(regexp = "^05\\d{8}$"  , message = "Number should start with 05xxxxxxxx and contain 10 numbers")
         private String phoneNumber;
         @Email
         @NotEmpty(message = "the email cannot be empty")

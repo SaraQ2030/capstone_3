@@ -3,12 +3,10 @@ package com.example.testcapstone3.Service;
 import com.example.testcapstone3.ApiResponse.APIException;
 import com.example.testcapstone3.Model.Appeal;
 import com.example.testcapstone3.Model.Casse;
-import com.example.testcapstone3.Model.Task;
 import com.example.testcapstone3.Model.User;
 
 import com.example.testcapstone3.Repoistory.AppealRepository;
 import com.example.testcapstone3.Repoistory.CasseRepository;
-import com.example.testcapstone3.Repoistory.TaskRepository;
 import com.example.testcapstone3.Repoistory.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,6 @@ public class AppealService {
     private final AppealRepository appealRepository;
     private final CasseRepository caseRepository;
     private final UserRepository userRepository;
-    private final TaskRepository taskRepository;
 
     public List<Appeal> getall() {
         if (appealRepository.findAll().isEmpty()) {
@@ -40,6 +37,7 @@ public class AppealService {
     public void addAppeal(Appeal appeal) {
         //AppeaThecase in this method in CaseService already setCase in appeal so no need here set
         Casse cas = caseRepository.findCasseById(appeal.getCasse().getId());
+
         if (cas == null) {
             throw new APIException("Cant add Appeal without Case ");
         } else {
@@ -81,24 +79,50 @@ public class AppealService {
     }
 
     //--------------------------------------------------Extra 1-------------------
-    public void closedAppeal(Integer caseId,Integer userId) {
+    public void approve(Integer caseId,Integer userId ){
         User user=userRepository.findUserById(userId);//lawyer
         Appeal appeal = appealRepository.findAppealByCasseId(caseId);
+        Casse casse=caseRepository.findCasseById(caseId);
         if (appeal != null && user!=null) {
-            if (appeal.getCasse().getIsAppeal()) {
+            if(casse.getUsser().getId()==userId){
+                throw new APIException(" Only the lawyer of the case can approve Appeal case with ID." + caseId);
+            }
+                appeal.setResult("Approved");
+                appealRepository.save(appeal);
+            closedAppeal( caseId, userId);
+
+        }
+    }
+
+///=================================
+    public void closedAppeal(Integer caseId,Integer userId) {
+        User user = userRepository.findUserById(userId);//lawyer
+        Appeal appeal = appealRepository.findAppealByCasseId(caseId);
+        if (appeal != null && user != null) {
+            if (appeal.getCasse().getAppeal()!=null) {
                 Casse casse = appeal.getCasse();
                 casse.setIsAppeal(false);
                 caseRepository.save(casse);//save update
                 appeal.setCasse(casse);
-                appealRepository.save(appeal);//save update
+                //Approved|NOT_Approved
+                    appeal.setClosed(true);
+                    appealRepository.save(appeal);//save update
+                } else {
+                    throw new APIException("Appeal is already closed");
+                }
             } else {
-                throw new APIException("Appeal is already closed");
+                throw new APIException("Not Found Appeal with ID " + caseId);
             }
-        } else {
-            throw new APIException("Not Found Appeal with ID " + caseId);
         }
+
     }
 
 
 
-}
+    //|| user==null){
+
+
+
+
+
+

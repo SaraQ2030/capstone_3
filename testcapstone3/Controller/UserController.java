@@ -43,4 +43,9 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.ok().body(new APIResponse("user deleted successfully!"));
     }
+
+    @GetMapping("get-all-with-status/{lawyerID}/{status}")
+    public ResponseEntity findCasseByUsserIdAndsAndStatus(@PathVariable Integer lawyerID,@PathVariable String status)
+    {return ResponseEntity.status(200).body(userService.findCasseByUsserIdAndsAndStatus(lawyerID,status));
+    }
 }

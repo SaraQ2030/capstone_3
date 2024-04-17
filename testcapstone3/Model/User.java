@@ -18,26 +18,27 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "usser")
+@Entity
+
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty(message = "user name can't be empty!")
+  //  @NotEmpty(message = "user name can't be empty!")
     @Column(columnDefinition = "varchar(20) not null")
     private String name;
 
-    @NotEmpty(message = "email can't be empty!")
+   // @NotEmpty(message = "email can't be empty!")
     @Email
     private String email;
 
-    @NotNull(message = "years of experience can't be null!")
+  //  @NotNull(message = "years of experience can't be null!")
     @Column(columnDefinition = "int not null")
     private Integer yearsOfExperience;
 
-    @NotEmpty(message = "specialty can't be empty!")
+  //  @NotEmpty(message = "specialty can't be empty!")
     @Column(columnDefinition = "varchar(20) not null")
     private String specialty;
 
@@ -46,9 +47,9 @@ public class User {
     @Column(columnDefinition = "varchar(7) not null check(role='Lawyer' or role='Admin')")
     private String role;
 
-    @NotEmpty(message = "Lawyerlicense can't be empty!")
-    @Column(columnDefinition = "varchar(255) not null ")//"varchar(255) as image path
-    private String Lawyerlicense;
+    @NotEmpty(message = "user name can't be empty!")
+    @Column(columnDefinition = "varchar(20) not null")
+    private String lawyerlicense;
 
     //====================Relations====================================
     //relation here is many users have many clients!(ManyToMany)
@@ -57,11 +58,11 @@ public class User {
     //delete comment sign later!
 
     //also 1 user has many cases! (OneToMany)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usser")
-    private Set<Task> tasks;
-    //check the case name !
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usser")
+//    private Set<Task> tasks;
+//    //check the case name !
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usser")
+    @OneToMany(cascade = CascadeType.DETACH, mappedBy = "usser")
     private Set<Casse> casses;
 
 
