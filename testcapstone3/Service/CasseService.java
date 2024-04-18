@@ -114,6 +114,7 @@ public class CasseService {
         long totalDays = 0;
         if (casse != null) {
             if (casse.getStatus().equalsIgnoreCase("closed")) {
+                if (casse.getDescription().equalsIgnoreCase("lose")){
                 if (casse.getAppeal() == null) {
                     //make sure case without appeal object
                     if (casse.getIsAppeal()) {//make sure case can be appeal
@@ -153,7 +154,9 @@ public class CasseService {
                             //appealService.addAppeal(appeal);
                             //  break;
                             // }
-                        }else{
+                        }
+
+                        else{
                             throw new APIException("Cannot appeal cases older than 60 days");
 
                         }
@@ -165,6 +168,10 @@ public class CasseService {
                 } else {//this reason why not can be appeal case
 
                     throw new APIException("This Case has already appeal case");
+                }
+
+                }else {
+                    throw new APIException("The result of case not Lose to appeal it ");
                 }
             } else {
                 throw new APIException("status case is :"+casse.getStatus()+"so can't appeal case till close it");
