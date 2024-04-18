@@ -79,6 +79,7 @@ public class CasseService {
 
     //======================================Assign Many Case to One Client ======================
     //extra 18
+    //Sarah
     public void assignClientToCases(Integer clientId, Integer caseId) {
         Client client = clientRepository.findClientById(clientId);
         Casse aCase = caseRepository.findCasseById(caseId);
@@ -93,6 +94,7 @@ public class CasseService {
 
 
     //extra 19
+    //Abduallrahman
     public void assignUserToCases(Integer userId, Integer caseId) {
         User user = userRepository.findUserById(userId);
         Casse aCase = caseRepository.findCasseById(caseId);
@@ -109,6 +111,7 @@ public class CasseService {
 
     //--------------------------------------------------Extra 1-------------------
     //extra 20
+    //Ghaliah
     public void AppeaThecase(AppealDTO appealDTO) {
         Casse casse = caseRepository.findCasseById(appealDTO.getCase_Id());
         long totalDays = 0;
@@ -132,6 +135,7 @@ public class CasseService {
                                 appeal.setStartDate(LocalDate.now());
                                 appeal.setClosed(false);
                                 casse.setAppeal(appeal);
+                        
                                 appealRepository.save(appeal);
                                appealService.addAppeal(appeal);
                             } else {
