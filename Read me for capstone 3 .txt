@@ -1,0 +1,80 @@
+Read me for capstone 3 
+
+Models-Service-Controller-Repository:
+Appeal- Casses- Evidence-AppealDTO    with CRUD  	 //Ghaliah	
+Document – Client-DocumentDTO   with  Crud               //Sarah
+User-Task    with  Crud                                	//Abduallrahman
+
+==============================================================================
+
+EndPoint:
+
+Appeal--
+
+1-approve 					Ghaliah
+2-closedAppeal 		 			Ghaliah 
+
+
+-----------------------------------------------------------
+Casse--
+3-acceptClientRequest				Sarah
+4-AppeaThecase					Ghaliah
+5-closeCase					Ghaliah
+6-startCase 					Ghaliah
+===========================================================
+7-searchCaseByClientId				Sarah
+8-getCasesByClientId				Sarah				
+9-changeStatus					Sarah
+10-getOneCasse					Sarah
+===========================================================
+11-getCasesByTypeOfLawsuits 			Abulrahman
+===========================================================
+
+
+-----------------------------------------------------------
+Client--
+
+12-sendRequestToLawyer				Sarah		
+13-rateLawyer					Abulrahman-Ghaliah-Sarah
+
+
+-----------------------------------------------------------
+Document--
+
+14-clientUploadDocument				Sarah
+
+-----------------------------------------------------------
+
+Evidence--
+
+15-assignEvidenceToAppeal			Ghaliah
+16-getAllevidenceByAppeal			Sarah			
+
+
+-----------------------------------------------------------
+
+Task--
+17-getTasksByStatus				Abulrahman
+18-getTasksByPriority				Abulrahman
+
+
+--------------------------------------------------------------
+
+
+User--
+
+19-findCasseByUsserIdAndsAndStatus		Ghaliah
+20-assignClientToUser				Ghaliah
+
+21-getLawyersBySpecialty			Abulrahman		
+22-getAssignedCasesByLawyerId			Abulrahman
+23-findTop10LawyersByExperience			Abulrahman
+24-getNumberOfClientsForLawyer			Abulrahman
+25-getCasesCountByUserId			Sarah
+26-getTopRatedLawyers				Abulrahman
+
+27-getTopWinnwer				Sarah-Abulrahman
+
+28-getAverge					Abulrahman					
+
+
