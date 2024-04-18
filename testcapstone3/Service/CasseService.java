@@ -302,7 +302,7 @@ public void acceptClientRequest(Integer caseId,Integer lawyerId){
 
 
     //extra 27
-    //Abdulrhman
+    //sara
     public List<Casse> getCasesByTypeOfLawsuits(String typeOfLawsuits) {
         return caseRepository.findCassesByTypeOflawsuits(typeOfLawsuits);
     }
