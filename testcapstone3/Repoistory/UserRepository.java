@@ -16,4 +16,9 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     @Query(value = "SELECT u FROM User u WHERE u.role = 'Lawyer' ORDER BY u.yearsOfExperience DESC LIMIT 10")
     List<User> findTop10LawyersByExperience(String role);
+
+
+
+    List<User> findAllByRole(String Role);
+
 }

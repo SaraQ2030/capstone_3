@@ -23,12 +23,13 @@ public class Casse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
    // @Column(columnDefinition = "varchar(30) not null")
-    @NotEmpty(message = "name appeal can not be null")
+    @NotEmpty(message = "name case can not be null")
     private String name;
-    @NotEmpty(message = "description appeal can not be null")
-   // @Column(columnDefinition = "varchar(200) not null")
+    @NotEmpty(message = "case description can not be null")
+   // @Column(columnDefinition = "varchar(200) not null //
+    // check(typeOflawsuits='personal' or typeOflawsuits='criminal' or typeOflawsuits='digital_crimes' or typeOflawsuits='Intellectual' )")
     private String description;
-    @Pattern(regexp = "^personal|labor|commercial|criminal|digital crime$")
+    @Pattern(regexp = "^personal|labor|commercial|criminal|digital_crimes|Intellectual $")
     private String typeOflawsuits;
     //@AssertTrue
     @Column(columnDefinition = "boolean ")

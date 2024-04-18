@@ -2,10 +2,7 @@ package com.example.testcapstone3.Service;
 
 import com.example.testcapstone3.ApiResponse.APIException;
 import com.example.testcapstone3.DTO.AppealDTO;
-import com.example.testcapstone3.Model.Appeal;
-import com.example.testcapstone3.Model.Casse;
-import com.example.testcapstone3.Model.Client;
-import com.example.testcapstone3.Model.User;
+import com.example.testcapstone3.Model.*;
 import com.example.testcapstone3.Repoistory.AppealRepository;
 import com.example.testcapstone3.Repoistory.CasseRepository;
 import com.example.testcapstone3.Repoistory.ClientRepository;
@@ -66,7 +63,6 @@ public class CasseService {
             cas.setStartDate(casse.getStartDate());
             cas.setIsAppeal(casse.getIsAppeal());
             cas.setAppeal(casse.getAppeal());
-            cas.setTypeOflawsuits(casse.getTypeOflawsuits());
             caseRepository.save(cas);//update
         }
     }
@@ -79,8 +75,10 @@ public class CasseService {
             caseRepository.delete(cas);
         }
     }
+    //=========================================EXTRA======================================================
 
     //======================================Assign Many Case to One Client ======================
+    //extra 18
     public void assignClientToCases(Integer clientId, Integer caseId) {
         Client client = clientRepository.findClientById(clientId);
         Casse aCase = caseRepository.findCasseById(caseId);
@@ -94,6 +92,7 @@ public class CasseService {
 //======================================Assign Many Case to One Lawyer as user ======================
 
 
+    //extra 19
     public void assignUserToCases(Integer userId, Integer caseId) {
         User user = userRepository.findUserById(userId);
         Casse aCase = caseRepository.findCasseById(caseId);
@@ -109,6 +108,7 @@ public class CasseService {
 
 
     //--------------------------------------------------Extra 1-------------------
+    //extra 20
     public void AppeaThecase(AppealDTO appealDTO) {
         Casse casse = caseRepository.findCasseById(appealDTO.getCase_Id());
         long totalDays = 0;
@@ -132,7 +132,7 @@ public class CasseService {
                                 appeal.setClosed(false);
                                 casse.setAppeal(appeal);
                                 appealRepository.save(appeal);
-                               // appealService.addAppeal(appeal);
+                               appealService.addAppeal(appeal);
                             } else {
                                 throw new IllegalStateException("Cannot appeal cases older than 15 days");
                             }
@@ -173,27 +173,31 @@ public class CasseService {
         } else {
             throw new APIException("Not found Case with ID " + appealDTO.getCase_Id());
         }
-//======================================================================================================
-
+//=====================================================================================================
     }
 
+    //extra 21
     private long calculateDays(LocalDate startDate, LocalDate endDate) {
         return startDate.until(endDate, ChronoUnit.DAYS);
     }
     //--------------------------------------------------Extra 2-------------------
 //2
+    //extra 22
     public void closeCase(Integer caseID, Integer userID, String result) {
         Casse casse = caseRepository.findCasseById(caseID);
         User user = userRepository.findUserById(userID);
         if (casse == null)
-            throw new APIException("Case not found");
+        { throw new APIException("Case not found");}
         else if (user == null)
-            throw new APIException("lawyer not found");
+        { throw new APIException("lawyer not found");}
         else if (casse.getUsser().getId()==userID) {
             if (casse.getStatus().equalsIgnoreCase("taken")) {
                     casse.setStatus("closed");
                     casse.setResult(result);
                     caseRepository.save(casse);
+                    if(result.equalsIgnoreCase("win")){
+                        user.setCount(user.getCount()+1);
+                    userRepository.save(user);}
                 }
             }
         else {
@@ -201,8 +205,11 @@ public class CasseService {
 
 
         }
+
+
     }
     //3 Done
+    //extra 23
 public void startCase(Integer caseId,Integer lawyerId){
     Casse casse = caseRepository.findCasseById(caseId);
     User user = userRepository.findUserById(lawyerId);
@@ -230,7 +237,8 @@ public void startCase(Integer caseId,Integer lawyerId){
 
     }
 
-    /////////////////////////   2
+    /////////////////////////   4
+    //extra 24
 public void acceptClientRequest(Integer caseId,Integer lawyerId){
 
     Casse casse = caseRepository.findCasseById(caseId);
@@ -255,24 +263,74 @@ public void acceptClientRequest(Integer caseId,Integer lawyerId){
         return caseRepository.findCassesByTypeOflawsuits(typeOfLawsuits);
     }
     //===========================================================================
+    //===========================================================================
+
+    //extra 25
+    public Casse searchCaseByClientId(Integer clientId,Integer casseId) {
+        Client client = clientRepository.findClientById(clientId);
+        Casse casse = caseRepository.findCasseById(casseId);
+        if (client == null ) {
+            throw new APIException("Client not found ");
+        }
+        if (casse == null) {
+            throw new APIException("case not found");
+        }
+        if (! (casse.getClients().getId()==client.getId())){
+            throw new APIException("Client id not match with this case");
+        }
+        return casse;
+    }
+    //------------------------------------------------------------------------------------
+    //git list of cases by client id
+    //extra 26
+    public List<Casse> getCasesByClientId(Integer clientId) {
+        List<Casse> list=caseRepository.findCassesByClientsId(clientId);
+        if (list.isEmpty()) {
+            throw new APIException(" not found Cases ");
+        }
+        return list;
+    }
+
+
+    //extra 27
+    public List<Casse> getCasseByStatus(String status) {
+        return caseRepository.findCassesByTypeOflawsuits(status);
+    }
+
+
+//==============================================================
+
+    //28 and 29 in appeal service !
+    //extra 30
+    public void changeStatus(Integer caseId){
+        Casse casse=caseRepository.findCasseById(caseId);
+        if (casse==null){
+            throw new APIException("Case not found");
+        }
+        //investigation|trial
+        if (casse.getStatusLawsuit().equalsIgnoreCase("investigation")){
+            casse.setStatusLawsuit("trial");
+            caseRepository.save(casse);
+        }
+        else throw new APIException("the satate of Law suit already trail "+casse.getStatusLawsuit());
+
+    }
+
+    public Casse getOneCasse(Integer caseId){
+        Casse casse=caseRepository.findCasseById(caseId);
+        if (casse==null){
+            throw new APIException("Case not found");
+        }
+        return casse;
+    }
+
+
 }
 
 
 
 
-//===================================  2 ===========================
-//    public void sendReslut(Integer caseId, String result){
-//        Casse casse = caseRepository.findCasseById(caseId);
-//        if(casse==null){
-//            throw new APIException("Case not found with ID: " + caseId);
-//        }
-//        casse.setResult(result);
-//        caseRepository.save(casse);
-//    }
 
-
-
-//getStatusofCaseFrom Task from lawyer
 
 
 

@@ -42,14 +42,15 @@ public class AppealController {
         appealService.deleteAppeal(id);
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("Appeal is deleted successfully"));
     }
+    //20
 
     @PutMapping("close-appeal/{caseId}/{userId}")
     public ResponseEntity closedAppeal(@PathVariable Integer caseId,@PathVariable Integer userId){
         appealService.closedAppeal(caseId,userId);
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("Closed successfully"));
     }
-
-    @PutMapping("approve-appeal/{caseId}/{userId}/{result}")
+//19
+    @PutMapping("close-appeal/{caseId}/{userId}/{result}")
     public ResponseEntity approve(@PathVariable Integer caseId,@PathVariable Integer userId,@PathVariable String result){
         appealService.approve(caseId,userId,result);
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("approved successfully"));

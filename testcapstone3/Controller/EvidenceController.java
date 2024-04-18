@@ -24,11 +24,11 @@ public class EvidenceController {
         return ResponseEntity.status(HttpStatus.OK).body(evidenceService.getAll());
     }
     @PostMapping("/add/{appealId}")
-    public ResponseEntity add(@PathVariable Integer appealID, @RequestBody @Valid Evidence evidence){
+    public ResponseEntity add(@PathVariable Integer appealId, @RequestBody @Valid Evidence evidence){
         logger.info("inside add");
 
-        evidenceService.add(appealID,evidence);
-        return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("evidence case is added successfully"));
+        evidenceService.add(appealId,evidence);
+        return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("evidence appeal is added successfully"));
     }
     @PutMapping("/update/{id}")
     public ResponseEntity update(@RequestBody@Valid Evidence evidence ,@PathVariable Integer id){
@@ -43,6 +43,12 @@ public class EvidenceController {
 
         evidenceService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("evidence is deleted successfully"));
+    }
+
+    //21
+@GetMapping("/get-all-evidence/{appealId}")
+    public ResponseEntity getAllevidenceByAppeal(@PathVariable Integer appealId){
+        return ResponseEntity.status(HttpStatus.OK).body(evidenceService.getAllevidenceByAppeal(appealId));
     }
 
 

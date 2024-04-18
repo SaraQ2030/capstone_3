@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -35,21 +36,27 @@ public class User {
     private String email;
 
   //  @NotNull(message = "years of experience can't be null!")
-    @Column(columnDefinition = "int not null")
+   // @Column(columnDefinition = "int not null")
     private Integer yearsOfExperience;
 
   //  @NotEmpty(message = "specialty can't be empty!")
-    @Column(columnDefinition = "varchar(20) not null")
+    @Column(columnDefinition = "varchar(100) not null")
     private String specialty;
 
     @NotEmpty(message = "role can't be empty!")
     @Pattern(regexp = "^Lawyer|Admin$")
-    @Column(columnDefinition = "varchar(7) not null check(role='Lawyer' or role='Admin')")
+    //@Column(columnDefinition = "varchar(7) not null check(role='Lawyer' or role='Admin')")
     private String role;
 
-    @NotEmpty(message = "user name can't be empty!")
-    @Column(columnDefinition = "varchar(20) not null")
+   // @NotEmpty(message = "user name can't be empty!")
+   // @Column(columnDefinition = "varchar(20) not null")
     private String lawyerlicense;
+
+    @ElementCollection
+    private List<Double> ratings;
+//
+   //@NotNull
+    private Double averageRating;
 
     //====================Relations====================================
     //relation here is many users have many clients!(ManyToMany)
@@ -63,7 +70,7 @@ public class User {
 
     @OneToMany(cascade = CascadeType.DETACH, mappedBy = "usser")
     private Set<Casse> casses;
-
+private Integer count=0;
 
 
 

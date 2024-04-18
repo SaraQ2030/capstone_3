@@ -78,7 +78,8 @@ public class AppealService {
         }
     }
 
-    //--------------------------------------------------Extra 1-------------------
+    //--------------------------------------------------Extra 5-------------------
+    //extra 28
     public void approve(Integer caseId, Integer userId,String result) {
         User user = userRepository.findUserById(userId);//lawyer
         Appeal appeal = appealRepository.findAppealByCasseId(caseId);
@@ -86,13 +87,16 @@ public class AppealService {
         if (appeal != null) {
 
             if (user != null) {
-                if (casse.getUsser().getId() == userId) {
-                    throw new APIException(" Only the lawyer of the case can approve Appeal case with ID." + caseId);
-                }
-                if (appeal.getCasse().getStatus().equalsIgnoreCase("taken"))
+//                if (casse.getUsser().getId()==userId) {
+//                    throw new APIException(" Only the lawyer of the case can approve Appeal case with ID." + caseId);
+//                }
+                if (appeal.getCasse().getStatus().equalsIgnoreCase("intake")){
                     appeal.setResult(result);
                 appealRepository.save(appeal);
-                closedAppeal(caseId, userId);
+                closedAppeal(caseId, userId);}
+                else{
+                    throw new APIException("lawyer not taken appeal");
+                }
             } else {
                 throw new APIException("lawyer not found");
             }
@@ -104,7 +108,8 @@ public class AppealService {
     }
 
 
-    ///=================================
+    ///=================================  6
+    //extra 29
     public void closedAppeal(Integer caseId, Integer userId) {
         User user = userRepository.findUserById(userId);//lawyer
         Appeal appeal = appealRepository.findAppealByCasseId(caseId);

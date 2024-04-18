@@ -49,11 +49,14 @@ public class CasseController {
     }
 
     ///============================  Gate one Extra 1 =======================
-    @PostMapping("appeal-case")
+
+    //18
+    @PostMapping("/appeal-case")
     public ResponseEntity appealCase(@RequestBody @Valid AppealDTO appealDTO){
         caseService.AppeaThecase(appealDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("Appeal added successfully"));
+        return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("Appeal requested successfully"));
     }
+    //17
 //closeCase
 //Integer caseID, Integer userID, String result
     @PutMapping("close-case/{caseID}/{userID}/{result}")
@@ -61,12 +64,14 @@ public class CasseController {
         caseService.closeCase(caseID,userID,result);
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("case closed successfully with result : "+result));
     }
+
+    //16
     @PutMapping("start-case/{caseID}/{userID}")
     public ResponseEntity startCase(@PathVariable Integer caseID ,@PathVariable Integer userID ){
         caseService.startCase(caseID,userID);
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("case start successfully with status investigation"));
     }
-
+//15
     //public void acceptClientRequest(Integer caseId,Integer lawyerId){
     @PutMapping("accept-case/{caseID}/{userID}")
     public ResponseEntity acceptClientRequest(@PathVariable Integer caseID ,@PathVariable Integer userID ){
@@ -80,7 +85,37 @@ public class CasseController {
     @GetMapping("/get-case-by-type-of-lawsuits/{typeOfLawsuits}")
     public ResponseEntity getCasesByTypeOfLawsuits(@PathVariable String typeOfLawsuits){
         logger.info("inside get Cases By TypeOfLawsuits");
-        return ResponseEntity.ok().body(caseService.getCasesByTypeOfLawsuits(typeOfLawsuits));
+        return ResponseEntity.ok().body(caseService.getCasseByStatus(typeOfLawsuits));
+    }
+    //-------------------------------------------------------------------------------
+    //14
+//get all cases for specific client
+
+    @GetMapping("client-cases/{clientId}")
+    public ResponseEntity listCasesByClient(@PathVariable Integer clientId  ){
+        logger.info("inside get all Cases By Client");
+        return ResponseEntity.status(200).body(caseService.getCasesByClientId(clientId));
+    }
+    //-------------------------------------------------------------------------------
+    //13
+//get specific case for specific client
+    @GetMapping("get-case-client/{clientId}/{caseId}")
+    public ResponseEntity searchCaseByClient(@PathVariable Integer clientId ,@PathVariable Integer caseId ){
+        logger.info("inside get one Case By Client id");
+        return ResponseEntity.status(200).body(caseService.searchCaseByClientId(clientId,caseId));
+    }
+
+    @GetMapping("change-status-lawsuit/{caseId}")
+    public ResponseEntity changeStatuslawsuit(@PathVariable Integer caseId ){
+        logger.info("inside change Status");
+        caseService.changeStatus(caseId);
+        return ResponseEntity.ok().body(new APIResponse("change status lawsuit successfully"));
+    }
+
+    @GetMapping("get-one/{caseId}")
+    public ResponseEntity getOneCase(@PathVariable Integer caseId ){
+        logger.info("inside get one case");
+        return ResponseEntity.ok().body(  caseService.getOneCasse(caseId));
     }
 
 }

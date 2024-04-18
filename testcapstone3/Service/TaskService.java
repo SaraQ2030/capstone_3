@@ -52,12 +52,14 @@ public class TaskService {
         taskRepository.delete(task);
     }
 
-
+//========================================Extra=================================================================
+    //extra 11
     //method to get tasks by status!
     public List<Task> getTasksByStatus(String status) {
         return taskRepository.findTasksByStatus(status);
     }
 
+    //extra 12
     //Method to get Tasks by Priority
     public List<Task> getTasksByPriority(String priority) {
         return taskRepository.findTasksByPriority(priority);

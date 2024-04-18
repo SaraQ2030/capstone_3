@@ -45,7 +45,7 @@ public class ClientController {
         clientService.deleteClient(id);
         return ResponseEntity.status(200).body(new APIResponse("Client deleted"));
     }
-
+//12
     //public void sendRequestToLawyer(Integer caseID,Integer clientID,Integer lawyerID){
 @PutMapping("send-request-lawyer/{caseID}/{clientID}/{lawyerID}")
     public ResponseEntity sendRequestToLawyer(@PathVariable Integer caseID,@PathVariable Integer clientID,@PathVariable Integer lawyerID){
@@ -53,4 +53,15 @@ public class ClientController {
         return ResponseEntity.status(200).body(new APIResponse("Send Request Successfully"));
 
 }
+//11
+    @PutMapping("/rate-lawyer/{clientId}/{lawyerId}/{rating}")
+    public ResponseEntity rateLawyer(@PathVariable Integer clientId,
+                                     @PathVariable Integer lawyerId,
+                                     @PathVariable Double rating){
+        logger.info("inside rate lawyer");
+        clientService.rateLawyer(clientId, lawyerId, rating);
+        return ResponseEntity.ok().body(new APIResponse("lawyer rated succesfully by client!"));
+    }
+
+
 }

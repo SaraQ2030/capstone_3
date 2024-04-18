@@ -23,11 +23,11 @@ public class DocumentController {
         return ResponseEntity.status(200).body(documentationService.getAllDocuments());
     }
 
-
-    @PostMapping("/add")
-    public ResponseEntity addDocument(@RequestBody @Valid DocumentDTO documentDTO){
+//10
+    @PostMapping("/upload/{lawyerId}/{clientId}")
+    public ResponseEntity uploadDocument(@RequestBody @Valid DocumentDTO documentDTO,@PathVariable Integer lawyerId,@PathVariable Integer clientId){
         logger.info("inside add document");
-        documentationService.addDocument(documentDTO);
+        documentationService.clientUploadDocument(documentDTO,lawyerId,clientId);
         return ResponseEntity.status(200).body(new APIResponse("Document added"));
     }
 

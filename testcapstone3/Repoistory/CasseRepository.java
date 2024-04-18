@@ -18,4 +18,8 @@ public interface CasseRepository extends JpaRepository<Casse,Integer> {
     List<Casse> findCassesByUsserId(Integer lawyerId);
 
     List<Casse> findCassesByTypeOflawsuits(String typeOfLawsuits);
+    List<Casse> findCassesByClientsId(Integer clientId);
+
+
+
 }

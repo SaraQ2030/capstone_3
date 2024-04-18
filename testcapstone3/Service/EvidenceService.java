@@ -63,6 +63,8 @@ public class EvidenceService {
         }
     }
 
+    //============================EXTRA======================================
+    //extra 13
     public void assignEvidenceToAppeal(Integer eviID, Integer appealId) {
         Appeal appeal = appealRepository.findAppealByCasseId(appealId);
         Evidence evidence = evidenceRepository.findEvidenceById(eviID);
@@ -73,6 +75,21 @@ public class EvidenceService {
         evidence.setAppeal(appeal);
         evidenceRepository.save(evidence);
     }
+
+    //extra 14
+   public List<Evidence> getAllevidenceByAppeal(Integer appealId){
+       Appeal appeal = appealRepository.findAppealByCasseId(appealId);
+if (appeal==null)
+           throw new APIException("appeal not found");
+else{
+    List<Evidence>evidenceList=evidenceRepository.findAllByAppeal_Id(appealId);
+    if(evidenceList.isEmpty()){
+        throw new APIException("No evidence found");
+    }
+    return evidenceList;
+}
+   }
+
 
 
     }
