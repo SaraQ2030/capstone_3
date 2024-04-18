@@ -15,6 +15,7 @@ import java.util.Set;
     @Setter
     @Entity
     @NoArgsConstructor
+    //Sarah
     public class Client {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

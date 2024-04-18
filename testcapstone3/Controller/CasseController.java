@@ -82,11 +82,6 @@ public class CasseController {
 
 
 
-    @GetMapping("/get-case-by-type-of-lawsuits/{typeOfLawsuits}")
-    public ResponseEntity getCasesByTypeOfLawsuits(@PathVariable String typeOfLawsuits){
-        logger.info("inside get Cases By TypeOfLawsuits");
-        return ResponseEntity.ok().body(caseService.getCasseByStatus(typeOfLawsuits));
-    }
     //-------------------------------------------------------------------------------
     //14
 //get all cases for specific client
@@ -118,5 +113,13 @@ public class CasseController {
         return ResponseEntity.ok().body(  caseService.getOneCasse(caseId));
     }
 
+    //getCasesByTypeOfLawsuits
+
+//
+    @GetMapping("get-cases-by-type-of-lawsuits/{TypeOfLawsuits}")
+    public ResponseEntity getCasesByTypeOfLawsuits(@PathVariable String TypeOfLawsuits ){
+        logger.info("inside get one case");
+        return ResponseEntity.ok().body(  caseService.getCasesByTypeOfLawsuits(TypeOfLawsuits));
+    }
 }
 

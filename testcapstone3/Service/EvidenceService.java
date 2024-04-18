@@ -64,7 +64,7 @@ public class EvidenceService {
     }
 
     //============================EXTRA======================================
-    //extra 13
+    //extra 13          Ghaliah
     public void assignEvidenceToAppeal(Integer eviID, Integer appealId) {
         Appeal appeal = appealRepository.findAppealByCasseId(appealId);
         Evidence evidence = evidenceRepository.findEvidenceById(eviID);
@@ -76,7 +76,7 @@ public class EvidenceService {
         evidenceRepository.save(evidence);
     }
 
-    //extra 14
+    //extra 14          Sarah
    public List<Evidence> getAllevidenceByAppeal(Integer appealId){
        Appeal appeal = appealRepository.findAppealByCasseId(appealId);
 if (appeal==null)

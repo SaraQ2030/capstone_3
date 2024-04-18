@@ -17,6 +17,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @Entity
+//Ghaliah
 public class Casse {
 
     @Id

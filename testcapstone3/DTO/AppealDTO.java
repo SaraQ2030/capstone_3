@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 
 @AllArgsConstructor
-@Data
+@Data//ghaliah
 public class AppealDTO {
     @NotNull(message = "cant null caseID")
     private Integer case_Id;

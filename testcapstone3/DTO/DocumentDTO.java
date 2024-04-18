@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @AllArgsConstructor
-@Data
+@Data//sara
 public class DocumentDTO {
     @NotNull(message = "the case id cannot be empty")
     private Integer case_id;

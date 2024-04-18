@@ -56,7 +56,7 @@ private final ClientRepository clientRepository;
     }
 
 //==============================EXTRA=========================================================
-    //extra 1
+    //extra 1           ghaliah
     public List<Casse> findCasseByUsserIdAndsAndStatus(Integer lawerID,String status){
         User user=userRepository.findUserById(lawerID);
         if (user==null){throw new APIException("Lawyer Not Found");}
@@ -66,7 +66,7 @@ private final ClientRepository clientRepository;
         return casses;
     }
 
-    //extra 2
+    //extra 2 ghaliah
     public void assignClientToUser(Integer clientID,Integer lawyerID){
         Client client=clientRepository.findClientById(clientID);
         User user=userRepository.findUserById(lawyerID);
@@ -79,14 +79,14 @@ private final ClientRepository clientRepository;
 
 
     //extra 3
-    //method to get a lawyer by Specialty(get lawyers with their specialty)!
+    //method to get a lawyer by Specialty(get lawyers with their specialty)!   abdurahman
     public List<User> getLawyersBySpecialty(String specialty) {
 
         return userRepository.findUsersByRoleAndSpecialty("Lawyer", specialty);
     }
 
     //extra 4
-    //method to get assigned cases by lawyer id!
+    //method to get assigned cases by lawyer id! abdulrahman
     public List<Casse> getAssignedCasesByLawyerId(Integer lawyerId) {
         return caseRepository.findCassesByUsserId(lawyerId);
     }
@@ -94,6 +94,8 @@ private final ClientRepository clientRepository;
 
     //extra 5
     //method to get top 10 lawyers depand on their experience
+    //abdurahman
+
     public List<User> findTop10LawyersByExperience() {
         return userRepository.findTop10LawyersByExperience("Lawyer");
     }
@@ -112,6 +114,7 @@ private final ClientRepository clientRepository;
 
     //extra 7
     // Method to get all users with a specific number of tasks
+    //sarah
     public int getCasesCountByUserId(Integer userId) {
         User user = userRepository.findUserById(userId);
         if (user == null) {

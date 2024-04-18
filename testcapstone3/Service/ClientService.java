@@ -54,7 +54,7 @@ private final UserService userService;
 //===============================EXTRA==============================================
     //======================= request lawyer==================
 
-    //extra 16
+    //extra 16          sarah
 public void sendRequestToLawyer(Integer caseID,Integer clientID,Integer lawyerID){
     Casse casse=casseRepository.findCasseById(caseID);
     Client client=clientRepository.findClientById(clientID);
@@ -74,10 +74,10 @@ public void sendRequestToLawyer(Integer caseID,Integer clientID,Integer lawyerID
 }
 
     //extra 17
-    //method that allow to client to rate the lawyer!
+    //method that allow to client to rate the lawyer!       Aburahman - sarah- ghaliah
     public void rateLawyer(Integer clientId, Integer lawyerId, Double rating) {
-        User lawyer = userRepository.findUserById(lawyerId);
-        Client client=clientRepository.findClientById(clientId);
+        User lawyer = userRepository.findUserById(lawyerId);//check ghaliah
+        Client client=clientRepository.findClientById(clientId);////check ghaliah
         
         if (lawyer == null) {
             throw new APIException("Lawyer not found!");
@@ -85,12 +85,12 @@ public void sendRequestToLawyer(Integer caseID,Integer clientID,Integer lawyerID
         if (client == null) {
             throw new APIException("Client not found!");
         }
-        if (rating>=1&&rating<=5){
+        if (rating>=1&&rating<=5){//sarah
         Set<Client> clients=lawyer.getClient();
-        for(Client client1:clients){
-           if (client1.getId()==clientId){
-               lawyer.getRatings().add(rating);
-               userService.getAverge(lawyerId);
+        for(Client client1:clients){//ghaliah check client relation with lawyer
+           if (client1.getId()==clientId){//ghaliah check client relation with lawyer
+               lawyer.getRatings().add(rating);//abdurahman
+               userService.getAverge(lawyerId);////abdurahman
            }
            else{throw new APIException("client not in the list of lawyer");}
         }

@@ -18,6 +18,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+
+//Ghaliah
 public class Appeal {
     @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -43,7 +43,7 @@ public class AppealController {
         return ResponseEntity.status(HttpStatus.OK).body(new APIResponse("Appeal is deleted successfully"));
     }
     //20
-
+//==========================================================================
     @PutMapping("close-appeal/{caseId}/{userId}")
     public ResponseEntity closedAppeal(@PathVariable Integer caseId,@PathVariable Integer userId){
         appealService.closedAppeal(caseId,userId);

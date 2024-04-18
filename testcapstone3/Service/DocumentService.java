@@ -56,7 +56,7 @@ public class DocumentService {
 
     //------------------------------EXTRA---------------------------------------------------
     //extra 15
-    //user send request to client to upload document
+    //user send request to client to upload document        Sarah
     public void clientUploadDocument(DocumentDTO documentDTO,Integer clientID,Integer lawyerID){
         Casse casse=casseRepository.findCasseById(documentDTO.getCase_id());
         Client client=clientRepository.findClientById(clientID);

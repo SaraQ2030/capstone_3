@@ -78,7 +78,7 @@ public class CasseService {
     //=========================================EXTRA======================================================
 
     //======================================Assign Many Case to One Client ======================
-    //extra 18
+    //extra 18              SArah
     public void assignClientToCases(Integer clientId, Integer caseId) {
         Client client = clientRepository.findClientById(clientId);
         Casse aCase = caseRepository.findCasseById(caseId);
@@ -92,7 +92,7 @@ public class CasseService {
 //======================================Assign Many Case to One Lawyer as user ======================
 
 
-    //extra 19
+    //extra 19              abdulrahman
     public void assignUserToCases(Integer userId, Integer caseId) {
         User user = userRepository.findUserById(userId);
         Casse aCase = caseRepository.findCasseById(caseId);
@@ -108,7 +108,7 @@ public class CasseService {
 
 
     //--------------------------------------------------Extra 1-------------------
-    //extra 20
+    //extra 20              ghaliah
     public void AppeaThecase(AppealDTO appealDTO) {
         Casse casse = caseRepository.findCasseById(appealDTO.getCase_Id());
         long totalDays = 0;
@@ -189,7 +189,7 @@ public class CasseService {
     }
     //--------------------------------------------------Extra 2-------------------
 //2
-    //extra 22
+    //extra 22              ghaliah
     public void closeCase(Integer caseID, Integer userID, String result) {
         Casse casse = caseRepository.findCasseById(caseID);
         User user = userRepository.findUserById(userID);
@@ -202,7 +202,7 @@ public class CasseService {
                     casse.setStatus("closed");
                     casse.setResult(result);
                     caseRepository.save(casse);
-                    if(result.equalsIgnoreCase("win")){
+                    if(result.equalsIgnoreCase("win")){//sarah
                         user.setCount(user.getCount()+1);
                     userRepository.save(user);}
                 }
@@ -216,7 +216,7 @@ public class CasseService {
 
     }
     //3 Done
-    //extra 23
+    //extra 23              ghaliah
 public void startCase(Integer caseId,Integer lawyerId){
     Casse casse = caseRepository.findCasseById(caseId);
     User user = userRepository.findUserById(lawyerId);
@@ -266,13 +266,12 @@ public void acceptClientRequest(Integer caseId,Integer lawyerId){
 }
 
     //===========================================================================
-    public List<Casse> getCasesByTypeOfLawsuits(String typeOfLawsuits) {
-        return caseRepository.findCassesByTypeOflawsuits(typeOfLawsuits);
-    }
+    //
+
     //===========================================================================
     //===========================================================================
 
-    //extra 25
+    //extra 25          //sarah
     public Casse searchCaseByClientId(Integer clientId,Integer casseId) {
         Client client = clientRepository.findClientById(clientId);
         Casse casse = caseRepository.findCasseById(casseId);
@@ -289,7 +288,7 @@ public void acceptClientRequest(Integer caseId,Integer lawyerId){
     }
     //------------------------------------------------------------------------------------
     //git list of cases by client id
-    //extra 26
+    //extra 26  Sarah
     public List<Casse> getCasesByClientId(Integer clientId) {
         List<Casse> list=caseRepository.findCassesByClientsId(clientId);
         if (list.isEmpty()) {
@@ -300,15 +299,16 @@ public void acceptClientRequest(Integer caseId,Integer lawyerId){
 
 
     //extra 27
-    public List<Casse> getCasseByStatus(String status) {
-        return caseRepository.findCassesByTypeOflawsuits(status);
+    //Abdulrhman
+    public List<Casse> getCasesByTypeOfLawsuits(String typeOfLawsuits) {
+        return caseRepository.findCassesByTypeOflawsuits(typeOfLawsuits);
     }
 
 
 //==============================================================
 
     //28 and 29 in appeal service !
-    //extra 30
+    //extra 30          Sarah
     public void changeStatus(Integer caseId){
         Casse casse=caseRepository.findCasseById(caseId);
         if (casse==null){
@@ -322,7 +322,7 @@ public void acceptClientRequest(Integer caseId,Integer lawyerId){
         else throw new APIException("the satate of Law suit already trail "+casse.getStatusLawsuit());
 
     }
-
+// sarah
     public Casse getOneCasse(Integer caseId){
         Casse casse=caseRepository.findCasseById(caseId);
         if (casse==null){

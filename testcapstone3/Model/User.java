@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
+//Abdulrahman
 public class User {
 
     @Id
@@ -57,6 +57,8 @@ public class User {
 //
    //@NotNull
     private Double averageRating;
+    // @Column(columnDefinition = "int ")
+    private Integer count=0;
 
     //====================Relations====================================
     //relation here is many users have many clients!(ManyToMany)
@@ -70,7 +72,6 @@ public class User {
 
     @OneToMany(cascade = CascadeType.DETACH, mappedBy = "usser")
     private Set<Casse> casses;
-private Integer count=0;
 
 
 
