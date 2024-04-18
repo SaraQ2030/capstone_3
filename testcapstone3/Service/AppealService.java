@@ -80,6 +80,7 @@ public class AppealService {
 
     //--------------------------------------------------Extra 5-------------------
     //extra 28
+    //Ghaliah
     public void approve(Integer caseId, Integer userId,String result) {
         User user = userRepository.findUserById(userId);//lawyer
         Appeal appeal = appealRepository.findAppealByCasseId(caseId);
@@ -110,6 +111,7 @@ public class AppealService {
 
     ///=================================  6
     //extra 29
+    //Ghaliah
     public void closedAppeal(Integer caseId, Integer userId) {
         User user = userRepository.findUserById(userId);//lawyer
         Appeal appeal = appealRepository.findAppealByCasseId(caseId);
