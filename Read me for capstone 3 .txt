@@ -27,7 +27,7 @@ Casse--
 9-changeStatus					Sarah
 10-getOneCasse					Sarah
 ===========================================================
-11-getCasesByTypeOfLawsuits 			Abulrahman
+11-getCasesByTypeOfLawsuits 			Sarah
 ===========================================================
 
 
