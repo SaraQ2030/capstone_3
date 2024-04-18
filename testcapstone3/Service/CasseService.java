@@ -132,7 +132,7 @@ public class CasseService {
                                 appeal.setStartDate(LocalDate.now());
                                 appeal.setClosed(false);
                                 casse.setAppeal(appeal);
-                                appealRepository.save(appeal);
+                                appealRepository.save(appeal);   //Sarah 
                                appealService.addAppeal(appeal);
                             } else {
                                 throw new IllegalStateException("Cannot appeal cases older than 15 days");
